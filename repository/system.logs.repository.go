@@ -8,16 +8,13 @@ import (
 )
 
 type SystemLogsRepository struct {
-	user_collection database.CollectionInterface
-	loan_collection database.CollectionInterface
 	log_collection database.CollectionInterface
 }
 
 
-func NewSystemLogsRepository(user_collection database.CollectionInterface, loan_collection database.CollectionInterface) *SystemLogsRepository {
+func NewSystemLogsRepository(log_collection database.CollectionInterface) *SystemLogsRepository {
 	return &SystemLogsRepository{
-		user_collection: user_collection,
-		loan_collection: loan_collection,
+		log_collection: log_collection,
 	}
 }
 

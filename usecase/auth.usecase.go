@@ -19,7 +19,11 @@ func NewAuthUsecase(
 	emailServ domain.EmailServices,
 ) *AuthUsecase {
 	return &AuthUsecase{
-		authRepo: repository}
+		authRepo: repository,
+		tokenServ: tokenServ,
+		passwordServ: passwordServ,
+		emailServ: emailServ,
+	}
 }
 
 func (usecase *AuthUsecase) RegisterUserV(token string) (string, domain.ResponseUser, error) {
