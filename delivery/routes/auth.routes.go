@@ -29,6 +29,6 @@ func NewAuthRoute(group *gin.RouterGroup, users, state database.CollectionInterf
 	AuthController := controller.NewAuthController(Authusecase)
 
 	group.POST("/users/register", AuthController.RegisterUser_Unverified())
-	group.PATCH("/users/register/:token", AuthController.RegisterUser_verified())
-	group.POST("/login", AuthController.Login())
+	group.PATCH("/users/verify-email/:token", AuthController.RegisterUser_verified())
+	group.POST("/users/login", AuthController.Login())
 }
