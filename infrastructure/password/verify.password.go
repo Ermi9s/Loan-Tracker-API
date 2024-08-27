@@ -2,8 +2,8 @@ package passwordservice
 
 import (
 	"errors"	
-	domain "github.com/Ermi9s/Loan-Tracker-API/Loan-Tracker-API/domain"
-	enivronment "github.com/Ermi9s/Loan-Tracker-API/Loan-Tracker-API/infrastructure/env"
+	domain "github.com/Loan-Tracker-API/Loan-Tracker-API/domain"
+	enivronment "github.com/Loan-Tracker-API/Loan-Tracker-API/infrastructure/env"
 	"github.com/dgrijalva/jwt-go"
 )
 

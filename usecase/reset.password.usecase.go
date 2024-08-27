@@ -1,9 +1,9 @@
 package usecase
 
 import (
-	"github.com/Ermi9s/Loan-Tracker-API/Loan-Tracker-API/config"
-	"github.com/Ermi9s/Loan-Tracker-API/Loan-Tracker-API/domain"
-	passwordservice "github.com/Ermi9s/Loan-Tracker-API/Loan-Tracker-API/infrastructure/password"
+	"github.com/Loan-Tracker-API/Loan-Tracker-API/config"
+	"github.com/Loan-Tracker-API/Loan-Tracker-API/domain"
+	passwordservice "github.com/Loan-Tracker-API/Loan-Tracker-API/infrastructure/password"
 )
 
 type EmailVUsecase struct {

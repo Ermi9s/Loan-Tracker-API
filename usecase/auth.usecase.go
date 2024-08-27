@@ -1,8 +1,8 @@
 package usecase
 
 import (
-	"github.com/Ermi9s/Loan-Tracker-API/Loan-Tracker-API/config"
-	domain "github.com/Ermi9s/Loan-Tracker-API/Loan-Tracker-API/domain"
+	"github.com/Loan-Tracker-API/Loan-Tracker-API/config"
+	domain "github.com/Loan-Tracker-API/Loan-Tracker-API/domain"
 )
 
 type AuthUsecase struct {
@@ -100,4 +100,23 @@ func (usecase *AuthUsecase) LoginUser(user domain.LogInUser) (string, domain.Res
 	}
 
 	return Atoken, domain.ResponseUser{ID: userDoc.ID.Hex(), UserName: userDoc.UserName, Email: userDoc.Email}, nil
+}
+
+func (u *AuthUsecase) RefreshTokens(refreshToken string) (string, string, error) {
+    user, err := u.tokenServ.ValidateRefreshToken(refreshToken)
+    if err != nil {
+        return "", "", err
+    }
+
+    newAccessToken, err := u.tokenServ.GenerateAccessToken(user.ID)
+    if err != nil {
+        return "", "", err
+    }
+
+    newRefreshToken, err := u.tokenServ.GenerateRefreshToken(user.ID)
+    if err != nil {
+        return "", "", err
+    }
+
+    return newAccessToken, newRefreshToken, nil
 }

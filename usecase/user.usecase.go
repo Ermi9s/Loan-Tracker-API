@@ -3,7 +3,7 @@ package usecase
 import (
 	"errors"
 
-	"github.com/Ermi9s/Loan-Tracker-API/Loan-Tracker-API/domain"
+	"github.com/Loan-Tracker-API/Loan-Tracker-API/domain"
 )
 
 type UserUsecase struct {

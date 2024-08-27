@@ -4,7 +4,7 @@ import (
 	"errors"
 	"time"
 
-	"github.com/Ermi9s/Loan-Tracker-API/Loan-Tracker-API/domain"
+	"github.com/Loan-Tracker-API/Loan-Tracker-API/domain"
 	"github.com/dgrijalva/jwt-go"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 )

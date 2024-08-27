@@ -2,7 +2,8 @@ package controller
 
 import (
 	"fmt"
-	"github.com/Ermi9s/Loan-Tracker-API/Loan-Tracker-API/domain"
+	"net/http"
+	"github.com/Loan-Tracker-API/Loan-Tracker-API/domain"
 	"github.com/gin-gonic/gin"
 )
 
@@ -74,5 +75,37 @@ func (controller *AuthController) Login() gin.HandlerFunc {
 				"user": ruser,
 				"message": "user logged in successfully",
 		})
-}
-}
+	}}
+
+
+	func (ac *AuthController) Refresh() gin.HandlerFunc {
+		return func(c *gin.Context) {
+			cookie, err := c.Request.Cookie("refresh_token")
+			if err != nil {
+				c.JSON(http.StatusUnauthorized, gin.H{"error": "No refresh token provided"})
+				return
+			}
+	
+			refreshToken := cookie.Value
+	
+			accessToken, newRefreshToken, err := ac.AuthUsecase.RefreshTokens(refreshToken)
+			if err != nil {
+				c.JSON(http.StatusUnauthorized, gin.H{"error": err.Error()})
+				return
+			}
+	
+			http.SetCookie(c.Writer, &http.Cookie{
+				Name:     "refresh_token",
+				Value:    newRefreshToken,
+				Path:     "/",
+				HttpOnly: true,
+			})
+	
+			c.JSON(http.StatusOK, gin.H{
+				"access_token":  accessToken,
+			})
+		}
+	}
+
+
+
