@@ -23,7 +23,7 @@ func NewUserRoute(group *gin.RouterGroup, users database.CollectionInterface) {
 	mustBeAdminMiddleware := middleware.RoleBasedAuth(true , users)
 	
 	group.GET("/users/profile",loggedInMiddleware, ctrl.GetOneUser())
-	group.GET("/users",loggedInMiddleware,mustBeAdminMiddleware, ctrl.GetUsers())
-	group.DELETE("/users/:id",loggedInMiddleware,mustBeAdminMiddleware, ctrl.DeleteUser())
+	group.GET("/admin/users",loggedInMiddleware,mustBeAdminMiddleware, ctrl.GetUsers())
+	group.DELETE("admin/users/:id",loggedInMiddleware,mustBeAdminMiddleware, ctrl.DeleteUser())
 	group.PUT("/users/:id",loggedInMiddleware, ctrl.UpdatePassword())
 }
