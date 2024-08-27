@@ -52,5 +52,6 @@ func (usecase *UserUsecase) UpdatePassword(id string, updated_user domain.Update
 	if err != nil {
 		return domain.ResponseUser{}, err
 	}
+	
 	return domain.CreateResponseUser(user), nil
 }

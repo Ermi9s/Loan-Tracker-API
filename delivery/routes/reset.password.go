@@ -12,7 +12,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func NewVerifyEmialRoute(group *gin.RouterGroup, user_collection database.CollectionInterface) {
+func NewPasswordResetRoute(group *gin.RouterGroup, user_collection database.CollectionInterface) {
 	key := enivronment.OsGet("SECRETKEY")
 	email_user := enivronment.OsGet("EMAIL_USER")
 	email_password := enivronment.OsGet("EMAIL_PASSWORD")

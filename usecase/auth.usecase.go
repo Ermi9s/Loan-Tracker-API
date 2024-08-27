@@ -120,3 +120,17 @@ func (u *AuthUsecase) RefreshTokens(refreshToken string) (string, string, error)
 
     return newAccessToken, newRefreshToken, nil
 }
+
+
+func (usecase *AuthUsecase) RefreshToken(token string) (string , error) {
+	user, err := usecase.tokenServ.ValidateRefreshToken(token)
+	if err != nil {
+		return "",err
+	}
+
+	new_token, err := usecase.tokenServ.GenerateAccessToken(user.ID)
+	if err != nil {
+		return "",err
+	}
+	return new_token , nil
+}

@@ -54,6 +54,10 @@ type VerifyUser struct {
 	Email string `json:"email" bson:"email"`
 }
 
+type RefreshToken struct {
+	RefreshToken string `json:"refresh_token" bson:"refresh_token"`
+}
+
 // from actual user model to response model to be done in usecase
 func CreateResponseUser(user User) ResponseUser {
 	return ResponseUser{

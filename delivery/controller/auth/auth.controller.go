@@ -2,8 +2,8 @@ package controller
 
 import (
 	"fmt"
-	"net/http"
 	"github.com/Loan-Tracker-API/Loan-Tracker-API/domain"
+	"github.com/Loan-Tracker-API/Loan-Tracker-API/infrastructure/systemlogger"
 	"github.com/gin-gonic/gin"
 )
 
@@ -16,6 +16,8 @@ func NewAuthController(usecase domain.AuthUsecase_interface) *AuthController {
 }
 
 func (controller *AuthController) RegisterUser_Unverified() gin.HandlerFunc {
+	logger := systemlogger.Logger{}
+	logger.LogEvent("User Registered Without Verification")
 	return func(c *gin.Context) {
 		var user domain.RegisterUser
 		err := c.BindJSON(&user)
@@ -38,6 +40,9 @@ func (controller *AuthController) RegisterUser_Unverified() gin.HandlerFunc {
 } 
 
 func (controller *AuthController) RegisterUser_verified() gin.HandlerFunc {
+	logger := systemlogger.Logger{}
+	logger.LogEvent("User Registered With Verification")
+
 	return func(c *gin.Context) {
 		token := c.Param("token")
 		token , ruser , err := controller.AuthUsecase.RegisterUserV(token)
@@ -56,6 +61,8 @@ func (controller *AuthController) RegisterUser_verified() gin.HandlerFunc {
 } 
 
 func (controller *AuthController) Login() gin.HandlerFunc {
+	logger := systemlogger.Logger{}
+	logger.LogEvent("User Logged In")
 	return func(c *gin.Context) {
 		var user domain.LogInUser
 		err := c.BindJSON(&user)
@@ -79,30 +86,26 @@ func (controller *AuthController) Login() gin.HandlerFunc {
 
 
 	func (ac *AuthController) Refresh() gin.HandlerFunc {
+		logger	:= systemlogger.Logger{}
+		logger.LogEvent("User Refreshed Token")
+
 		return func(c *gin.Context) {
-			cookie, err := c.Request.Cookie("refresh_token")
+			var token domain.RefreshToken
+			err := c.BindJSON(&token)
 			if err != nil {
-				c.JSON(http.StatusUnauthorized, gin.H{"error": "No refresh token provided"})
+				c.IndentedJSON(400, gin.H{"error": err.Error()})
 				return
 			}
-	
-			refreshToken := cookie.Value
-	
-			accessToken, newRefreshToken, err := ac.AuthUsecase.RefreshTokens(refreshToken)
+			new_token , err := ac.AuthUsecase.RefreshToken(token.RefreshToken)
 			if err != nil {
-				c.JSON(http.StatusUnauthorized, gin.H{"error": err.Error()})
+				c.IndentedJSON(400, gin.H{"error": err.Error()})
 				return
 			}
-	
-			http.SetCookie(c.Writer, &http.Cookie{
-				Name:     "refresh_token",
-				Value:    newRefreshToken,
-				Path:     "/",
-				HttpOnly: true,
-			})
-	
-			c.JSON(http.StatusOK, gin.H{
-				"access_token":  accessToken,
+
+			c.IndentedJSON(
+				200, 
+				gin.H{"token":new_token, 
+					"message": "token refreshed successfully",
 			})
 		}
 	}

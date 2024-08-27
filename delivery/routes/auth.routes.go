@@ -13,7 +13,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func NewAuthRoute(group *gin.RouterGroup, users, state database.CollectionInterface) {
+func NewAuthRoute(group *gin.RouterGroup, users database.CollectionInterface) {
 
 
 	key := enivronment.OsGet("SECRETKEY")
@@ -32,4 +32,5 @@ func NewAuthRoute(group *gin.RouterGroup, users, state database.CollectionInterf
 	group.POST("/users/register", AuthController.RegisterUser_Unverified())
 	group.PATCH("/users/verify-email/:token", AuthController.RegisterUser_verified())
 	group.POST("/users/login", AuthController.Login())
+	group.POST("/users/token/refresh" , AuthController.Refresh())
 }

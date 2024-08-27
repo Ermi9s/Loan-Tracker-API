@@ -16,7 +16,7 @@ type AuthUsecase_interface interface {
 	RegisterUserV(token string) (string , ResponseUser , error)
 	RegisterUserU(user RegisterUser) (ResponseUser , error)
 	LoginUser(user LogInUser) (string , ResponseUser , error)
-	RefreshTokens(refreshToken string) (string, string, error)
+	RefreshToken(refreshToken string) (string, error)
 }
 
 type EmailServices interface {
