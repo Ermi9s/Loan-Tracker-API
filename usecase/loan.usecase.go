@@ -23,7 +23,7 @@ func (lu *LoanUsecase) GetLoanByID(id string) (domain.Loan, error) {
 }
 
 func (lu *LoanUsecase) CreateLoan(loan domain.Loan , user domain.ResponseUser) (domain.Loan, error) {
-	loan.OwedBy = user
+	loan.OwedBy = user.ID
 	return lu.loan_repository.CreateLoan(loan)
 }
 

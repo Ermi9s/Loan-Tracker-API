@@ -30,7 +30,7 @@ func NewAuthRoute(group *gin.RouterGroup, users database.CollectionInterface) {
 	AuthController := controller.NewAuthController(Authusecase)
 
 	group.POST("/users/register", AuthController.RegisterUser_Unverified())
-	group.PATCH("/users/verify-email/:token", AuthController.RegisterUser_verified())
+	group.GET("/users/verify-email/:token", AuthController.RegisterUser_verified())
 	group.POST("/users/login", AuthController.Login())
 	group.POST("/users/token/refresh" , AuthController.Refresh())
 }

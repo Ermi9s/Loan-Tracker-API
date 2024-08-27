@@ -18,7 +18,13 @@ func NewAuthRepository(collection database.CollectionInterface) *AuthRepository 
 }
 
 func (authRepo *AuthRepository) RegisterUser(user domain.RegisterUser) (primitive.ObjectID , error) {
-	inserted , err := authRepo.Collection.InsertOne(context.TODO() , user)
+	useri := domain.User{
+		UserName: user.UserName,
+		Email: user.Email,
+		Password: user.Password,
+		Is_Admin: false,
+	}
+	inserted , err := authRepo.Collection.InsertOne(context.TODO() , useri)
 	Id := inserted.InsertedID.(primitive.ObjectID)
 
 	if err != nil {

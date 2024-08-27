@@ -65,7 +65,7 @@ func (usecase *AuthUsecase) RegisterUserU(user domain.RegisterUser) (domain.Resp
 		return domain.ResponseUser{}, err
 	}
 
-	body, sub := config.ConfigBody(token)
+	sub,body := config.ConfigBody(token)
 	err = usecase.emailServ.SendVerificationEmail(user.Email, sub, body)
 	if err != nil {
 		return domain.ResponseUser{}, err
