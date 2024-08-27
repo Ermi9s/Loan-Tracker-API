@@ -7,7 +7,7 @@ type TokenSrvices interface {
 	GenerateRefreshToken(id primitive.ObjectID) (string, error)
 	ValidateAccessToken(tokenStr string) (*User, error)
 	ValidateRefreshToken(tokenStr string) (*User, error)
-	GenrateToken(id string, expr int)
-	VerifyRegistrationToken(tokenStr string) (RegisterUser , error)
+	GenrateToken(id string , expr int) (string, error)
 	GenrateRegistrationToken(user RegisterUser) (string, error)
+	VerifyRegistrationToken(tokenStr string) (RegisterUser , error)
 }

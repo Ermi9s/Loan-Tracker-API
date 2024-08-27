@@ -48,3 +48,16 @@ func (authRepo *AuthRepository)InsertRefreshToken(id string  , token string) err
 
 	return nil
 }
+
+
+func (repository *AuthRepository)GetUserDocumentByEmail(email string) (domain.User , error) {
+	filter := bson.D{{Key: "email" , Value: email}}
+	result := repository.Collection.FindOne(context.TODO() , filter)
+
+	var user domain.User
+	err := result.Decode(&user)
+	if err != nil {
+		return domain.User{} , err
+	}
+	return user , nil
+}

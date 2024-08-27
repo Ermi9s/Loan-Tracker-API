@@ -53,3 +53,26 @@ func (controller *AuthController) RegisterUser_verified() gin.HandlerFunc {
 		})
 }
 } 
+
+func (controller *AuthController) Login() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		var user domain.LogInUser
+		err := c.BindJSON(&user)
+		if err != nil {
+			c.IndentedJSON(400, gin.H{"error": err.Error()})
+			return
+		}
+		token , ruser , err := controller.AuthUsecase.LoginUser(user)
+		if err != nil {
+			c.IndentedJSON(400, gin.H{"error": err.Error()})
+			return
+		}
+
+		c.IndentedJSON(
+			200, 
+			gin.H{"token":token, 
+				"user": ruser,
+				"message": "user logged in successfully",
+		})
+}
+}

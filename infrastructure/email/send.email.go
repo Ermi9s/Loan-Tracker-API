@@ -11,6 +11,10 @@ type Email struct {
 	Password string
 }
 
+func NewEmail(user, password string) *Email {
+	return &Email{User: user, Password: password}
+}
+
 func (email *Email)SendVerificationEmail(to, subject, body string) error {
 	m := gmail.NewMessage()
 	m.SetHeader("From", email.User)
