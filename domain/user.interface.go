@@ -14,7 +14,6 @@ type User_Usecase_interface interface {
 	GetOneUser(id string) (ResponseUser , error) 
 	GetUsers() ([]ResponseUser , error)
 	DeleteUser(id string) (error)
-	FilterUser(map[string]string) ([]ResponseUser , error)
 	UpdatePassword(id string , updated_user UpdatePassword)(ResponseUser , error) 
 }
 
@@ -22,7 +21,6 @@ type User_Repository_interface interface{
 	GetUserDocumentByID(id string) (User , error)
 	GetUserDocuments() ([]User , error)
 	DeleteUserDocument(id string) (error)
-	FilterUserDocument(filter map[string]string) ([]User , error)
 	UpdateUserPassword(id string , new_hashed_password string) (User , error)
 }
 

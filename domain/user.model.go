@@ -50,6 +50,10 @@ type RegisterUserClaims struct {
 	Password     string             `json:"password"`
 }
 
+type VerifyUser struct {
+	Email string `json:"email" bson:"email"`
+}
+
 // from actual user model to response model to be done in usecase
 func CreateResponseUser(user User) ResponseUser {
 	return ResponseUser{

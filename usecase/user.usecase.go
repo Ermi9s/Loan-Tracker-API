@@ -43,18 +43,6 @@ func (usecase *UserUsecase) DeleteUser(id string) error {
 	return nil
 }
 
-func (usecase *UserUsecase) FilterUser(filter map[string]string) ([]domain.ResponseUser, error) {
-	users, err := usecase.UserRepository.FilterUserDocument(filter)
-	if err != nil {
-		return []domain.ResponseUser{}, err
-	}
-	response_users := []domain.ResponseUser{}
-	for _, user := range users {
-		response_users = append(response_users, domain.CreateResponseUser(user))
-	}
-	return response_users, nil
-}
-
 func (usecase *UserUsecase) UpdatePassword(id string, updated_user domain.UpdatePassword) (domain.ResponseUser, error) {
 	if updated_user.Password != updated_user.Confirm {
 		return domain.ResponseUser{}, errors.New("password and confirm password do not match")

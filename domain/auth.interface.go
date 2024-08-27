@@ -21,3 +21,10 @@ type AuthUsecase_interface interface {
 type EmailServices interface {
 	SendVerificationEmail(to, subject, body string) error
 }
+
+
+type EmailVUsecase interface {
+	SendForgretPasswordEmail(id string, vuser VerifyUser) error
+	ValidateForgetPassword(id string, token string) error
+	UpdatePassword(id string, update_password UpdatePassword) (User, error)
+}
