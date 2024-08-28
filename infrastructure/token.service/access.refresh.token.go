@@ -4,7 +4,7 @@ import (
 	"errors"
 	"time"
 
-	"github.com/Ermi9s/Loan-Tracker-API/Loan-Tracker-API/domain"
+	"github.com/Loan-Tracker-API/Loan-Tracker-API/domain"
 	"github.com/dgrijalva/jwt-go"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 )
@@ -112,7 +112,7 @@ func (vt *TokenService_imp) GenrateRegistrationToken(user domain.RegisterUser) (
 
 
 func (vt *TokenService_imp) VerifyRegistrationToken(tokenStr string) (domain.RegisterUser , error) {
-	token, err := jwt.ParseWithClaims(tokenStr, &domain.UserClaims{}, func(token *jwt.Token) (interface{}, error) {
+	token, err := jwt.ParseWithClaims(tokenStr, &domain.RegisterUserClaims{}, func(token *jwt.Token) (interface{}, error) {
 		return []byte(vt.SecretKey), nil
 	})
 

@@ -3,8 +3,8 @@ package repository
 import (
 	"context"
 
-	"github.com/Ermi9s/Loan-Tracker-API/Loan-Tracker-API/database"
-	"github.com/Ermi9s/Loan-Tracker-API/Loan-Tracker-API/domain"
+	"github.com/Loan-Tracker-API/Loan-Tracker-API/database"
+	"github.com/Loan-Tracker-API/Loan-Tracker-API/domain"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 )

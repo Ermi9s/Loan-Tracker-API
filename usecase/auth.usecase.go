@@ -1,8 +1,8 @@
 package usecase
 
 import (
-	"github.com/Ermi9s/Loan-Tracker-API/Loan-Tracker-API/config"
-	domain "github.com/Ermi9s/Loan-Tracker-API/Loan-Tracker-API/domain"
+	"github.com/Loan-Tracker-API/Loan-Tracker-API/config"
+	domain "github.com/Loan-Tracker-API/Loan-Tracker-API/domain"
 )
 
 type AuthUsecase struct {
@@ -19,7 +19,11 @@ func NewAuthUsecase(
 	emailServ domain.EmailServices,
 ) *AuthUsecase {
 	return &AuthUsecase{
-		authRepo: repository}
+		authRepo: repository,
+		tokenServ: tokenServ,
+		passwordServ: passwordServ,
+		emailServ: emailServ,
+	}
 }
 
 func (usecase *AuthUsecase) RegisterUserV(token string) (string, domain.ResponseUser, error) {
@@ -61,7 +65,7 @@ func (usecase *AuthUsecase) RegisterUserU(user domain.RegisterUser) (domain.Resp
 		return domain.ResponseUser{}, err
 	}
 
-	body, sub := config.ConfigBody(token)
+	sub,body := config.ConfigBody(token)
 	err = usecase.emailServ.SendVerificationEmail(user.Email, sub, body)
 	if err != nil {
 		return domain.ResponseUser{}, err
@@ -100,4 +104,37 @@ func (usecase *AuthUsecase) LoginUser(user domain.LogInUser) (string, domain.Res
 	}
 
 	return Atoken, domain.ResponseUser{ID: userDoc.ID.Hex(), UserName: userDoc.UserName, Email: userDoc.Email}, nil
+}
+
+func (u *AuthUsecase) RefreshTokens(refreshToken string) (string, string, error) {
+    user, err := u.tokenServ.ValidateRefreshToken(refreshToken)
+    if err != nil {
+        return "", "", err
+    }
+
+    newAccessToken, err := u.tokenServ.GenerateAccessToken(user.ID)
+    if err != nil {
+        return "", "", err
+    }
+
+    newRefreshToken, err := u.tokenServ.GenerateRefreshToken(user.ID)
+    if err != nil {
+        return "", "", err
+    }
+
+    return newAccessToken, newRefreshToken, nil
+}
+
+
+func (usecase *AuthUsecase) RefreshToken(token string) (string , error) {
+	user, err := usecase.tokenServ.ValidateRefreshToken(token)
+	if err != nil {
+		return "",err
+	}
+
+	new_token, err := usecase.tokenServ.GenerateAccessToken(user.ID)
+	if err != nil {
+		return "",err
+	}
+	return new_token , nil
 }

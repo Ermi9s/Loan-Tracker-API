@@ -3,7 +3,7 @@ package controller
 import (
 	"fmt"
 	"net/http"
-	domain "github.com/Ermi9s/Loan-Tracker-API/Loan-Tracker-API/domain"
+	"github.com/Loan-Tracker-API/Loan-Tracker-API/domain"
 	"github.com/gin-gonic/gin"
 )
 

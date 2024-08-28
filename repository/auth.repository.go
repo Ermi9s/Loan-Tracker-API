@@ -2,9 +2,8 @@ package repository
 
 import (
 	"context"
-
-	"github.com/Ermi9s/Loan-Tracker-API/Loan-Tracker-API/database"
-	"github.com/Ermi9s/Loan-Tracker-API/Loan-Tracker-API/domain"
+	"github.com/Loan-Tracker-API/Loan-Tracker-API/database"
+	"github.com/Loan-Tracker-API/Loan-Tracker-API/domain"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 )
@@ -19,7 +18,13 @@ func NewAuthRepository(collection database.CollectionInterface) *AuthRepository 
 }
 
 func (authRepo *AuthRepository) RegisterUser(user domain.RegisterUser) (primitive.ObjectID , error) {
-	inserted , err := authRepo.Collection.InsertOne(context.TODO() , user)
+	useri := domain.User{
+		UserName: user.UserName,
+		Email: user.Email,
+		Password: user.Password,
+		Is_Admin: false,
+	}
+	inserted , err := authRepo.Collection.InsertOne(context.TODO() , useri)
 	Id := inserted.InsertedID.(primitive.ObjectID)
 
 	if err != nil {
